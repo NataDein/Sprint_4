@@ -8,12 +8,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class BaseTest {
     public static WebDriver driver;
+    protected final String SITE_URL = "https://qa-scooter.praktikum-services.ru/";
 
     @Before
     public void init() {
         driver = getDriver(System.getenv("BROWSER"));
 
-        driver.get("https://qa-scooter.praktikum-services.ru/");
+        driver.get(SITE_URL);
     }
 
     private WebDriver getDriver(String browser) {

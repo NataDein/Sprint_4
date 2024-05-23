@@ -4,13 +4,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.By;
 import pages.*;
 
 
 @RunWith(Parameterized.class)
 public class OrderingScooterTest extends BaseTest {
-    private final By orderButton;   // Кнопка заказа (верхняя/нижняя)
+    private final String orderButton;   // Кнопка заказа (верхняя/нижняя)
     private final String name;          // Имя заказчика
     private final String surname;       // Фамилия заказчика
     private final String address;       // Адрес доставки
@@ -23,7 +22,7 @@ public class OrderingScooterTest extends BaseTest {
 
 
     public OrderingScooterTest(
-            By orderButton,
+            String orderButton,
             String name,
             String surname,
             String address,
@@ -47,17 +46,23 @@ public class OrderingScooterTest extends BaseTest {
     @Parameterized.Parameters
     public static Object[][] getOrderData() {
         return new Object[][]{
-                {By.xpath(".//div[contains(@class, 'Header_Nav')]/button[text()='Заказать']"), "Алиса", "Нагорных", "Ленинский пр.дом 187", "+78005353535", "01.06.2024", "сутки",
-                        "black", "1"},
-                {By.xpath(".//div[contains(@class, 'Home_FinishButton')]/button[text()='Заказать']"), "Зара", "Эчендемовская", "ул. Пушкина, дом 1 квартира 5",
-                        "+79816007080", "30.05.2024", "трое суток", "grey",
-                        "Привет. Спишь?"},
+                {
+                    "topOrderButton",
+                    "Алиса", "Нагорных", "Ленинский пр.дом 187", "+78005353535", "01.06.2024", "сутки",
+                    "black", "1"
+                },
+                {
+                    "bottomOrderButton",
+                    "Зара", "Эчендемовская", "ул. Пушкина, дом 1 квартира 5",
+                    "+79816007080", "30.05.2024", "трое суток", "grey",
+                    "Привет. Спишь?"
+                },
         };
     }
 
     @Test
     public void orderingScooterWithValidData() {
-        MainPage mainPage = new MainPage(driver); // не знаю, что его не устраивает, но и не знаю смысл данного "драйвер" в этой записи
+        MainPage mainPage = new MainPage(driver);
         PageOrderFor pageOrderFor = new PageOrderFor(driver);
         PageAboutRent pageAboutRent = new PageAboutRent(driver);
         PageConfirmOrder pageConfirmOrder = new PageConfirmOrder(driver);

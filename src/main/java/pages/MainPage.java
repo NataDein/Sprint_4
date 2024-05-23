@@ -19,26 +19,28 @@ public class MainPage {
     }
 
     //Элементы:
-    /**  */
+    /** Локатор кнопки принятия куков */
     private final By cookieAcceptButton = By.xpath(".//button[contains(@class, 'App_CookieButton')]");
 
-    //Кнопка "Заказать" верхняя
-    private final By topOrder = By.xpath(".//button[@class='.//button[@class='Button_Button__ra12g']");
+    /** Локатор кнопки "Заказать" верхняя */
+    private final By topOrderButton = By.xpath(".//div[contains(@class, 'Header_Nav')]/button[text()='Заказать']");
 
-    //Кнопка "Заказать" нижняя
-    private final By buttomOrder = By.xpath(".//button[@class='.//button[@class='Button_Button__ra12g Button_UltraBig__UU3Lp']");
+    /** Локатор кнопки "Заказать" нижняя */
+    private final By bottomOrderButton = By.xpath(".//div[contains(@class, 'Home_FinishButton')]/button[text()='Заказать']");
 
-    //Блок "Вопросы о важном"
+    /** Блок "Вопросы о важном" */
     private final By questionAboutImportant = By.xpath(".//div[contains(@class, 'Home_SubHeader') and text() = 'Вопросы о важном']");
 
-    /** Контейнер элементов списка "Вопросов о важном" */
+    /** Локатор контейнера элементов списка "Вопросов о важном" */
     private final By faqSectionLocator = By.xpath(".//div[contains(@class,'Home_FAQ')]");
+
     /** Локатор кнопки элемента списка "Вопросов о важном". Применяется как часть цепочки к элементу */
     private final By faqItemButtonLocator = By.xpath(".//div[@class='accordion__button']");
 
 
     //Методы:
 
+    /** Получить элемент списка "Вопросов о важном" */
     private WebElement getFAQItem(int itemIndex) {
         By faqItemLocator = By.xpath(".//div[@class='accordion__item']");
 
@@ -53,30 +55,46 @@ public class MainPage {
         driver.findElement(cookieAcceptButton).click();
     }
 
-    //Кликнуть на кнопку "Заказать"
-    public void clickOrderButton(By orderButton) {
-        WebElement element = driver.findElement(orderButton);
+    /** Получить элемент кнопки в зависимости от переданного типа */
+    public WebElement getOrderButton(String buttonType) {
+        By orderButton;
+
+        switch (buttonType) {
+            case "topOrderButton": orderButton = topOrderButton; break;
+            case "bottomOrderButton": orderButton = bottomOrderButton; break;
+            default: throw new IllegalArgumentException("Некорректное значение параметра кнопки заказа");
+        }
+
+        return driver.findElement(orderButton);
+    }
+
+    /** Кликнуть на кнопку "Заказать" */
+    public void clickOrderButton(String orderButton) {
+        WebElement element = getOrderButton(orderButton);
 
         element.click();
     }
 
-    //Перейти к блоку "Вопросы о важном"
+    /** Перейти к блоку "Вопросы о важном" */
     public void goToQuestionAboutImportant() {
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", questionAboutImportant);
     }
 
+    /** Нажать на элемент списка "Вопросов о важном" */
     public void clickImportantQuestionItem(int itemIndex) {
         WebElement faqItemButton = getFAQItem(itemIndex).findElement(faqItemButtonLocator);
 
         faqItemButton.click();
     }
 
+    /** Получить текст подписи элемента из списка "Вопросов о важном" */
     public String getTextOfLabelFAQItem(int itemIndex) {
         WebElement faqItemContent = getFAQItem(itemIndex).findElement(faqItemButtonLocator);
 
         return faqItemContent.getText();
     }
 
+    /** Получить текст содержимого элемента из списка "Вопросов о важном" */
     public String getTextContentOfFAQItem(int itemIndex) {
         By faqItemContentLocator = By.xpath(".//div[@class='accordion__panel']");
 

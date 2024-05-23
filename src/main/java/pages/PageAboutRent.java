@@ -33,7 +33,7 @@ public class PageAboutRent {
     private By comment = By.xpath(".//input[@placeholder='Комментарий для курьера']");
 
 
-    //Кнопка "Заказать"
+    //Локатор кнопки "Заказать"
     private By buttonOrder = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Заказать']");
 
     //Методы:

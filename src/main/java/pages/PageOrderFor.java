@@ -33,7 +33,7 @@ public class PageOrderFor {
     //Телефон
     private By phoneField = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
 
-    //Кнопка "Далее"
+    //Локатор кнопки "Далее"
     private By buttonNext = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Далее']");
 
     //Методы
